@@ -1,0 +1,9 @@
+images/
+*.pdf
+venv/
+test_texts/
+"Habitat regions - Ertter.jpg"
+*.csv
+*.jpg
+NativeTXT2020.txt
+.DS_Store
