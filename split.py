@@ -51,9 +51,17 @@ with open(args.input_file, 'r') as input_file:
             new = list(filter(None, new))
 
             # remove first item in list if it's obviously not a plant name
-            if len(new[0]) >= 100 or new[0][0:5] in ['Photo', 'Main ', 'Flowe', ',    ', 
-                                                     'Right', 'Seed ', 'Weber', 'Wild ']:
-                new = new[1:]
+            def remove_non_species(text_lst):
+                if len(text_lst[0]) >= 100 or text_lst[0][0:5] in ['Photo', 'Main ', 'Flowe', ',    ', 
+                                                                   'Right', 'Seed ', 'Weber', 'Wild ',
+                                                                   'Leave', 'Leaf_', '(cid:']:
+                    text_lst = text_lst[1:]
+                    text_lst = remove_non_species(text_lst)
+                    return text_lst
+                else:
+                    return text_lst
+
+            new = remove_non_species(new)
 
             # some plant names contain brackets. remove them for easier directory access
             # replace spaces with underscores for file and directory snake case
@@ -65,7 +73,7 @@ with open(args.input_file, 'r') as input_file:
                     plant_name = plant_name + char
 
             # change to directory
-            species_dir = plant_name + f"_pg{page_number}" 
+            species_dir = plant_name + f"_pg_{page_number}" 
             os.mkdir(species_dir)
             os.chdir(species_dir)
 
