@@ -4,6 +4,9 @@ venv/
 test_texts/
 "Habitat regions - Ertter.jpg"
 *.csv
+*.xlsx
 *.jpg
+*.html
+plant_species_text_img/
 NativeTXT2020.txt
 .DS_Store
