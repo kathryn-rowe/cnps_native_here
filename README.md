@@ -1,6 +1,6 @@
 Run pdf2txt.py to extract text from pdf.
 ```
-pdf2txt.py -o new_test2.txt -p 20 East_Bay_Native_Plants_2014_15.pdf
+pdf2txt.py -o new_test.txt -p 20 East_Bay_Native_Plants_2014_15.pdf
 ```
 
 Run split.py to extract text and create plant species sub directories.
