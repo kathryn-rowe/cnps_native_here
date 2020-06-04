@@ -63,22 +63,22 @@ with open(args.input_file, 'r') as input_file:
 
             new = remove_non_species(new)
 
-            # some plant names contain brackets. remove them for easier directory access
+            # some plant names contain brackets, periods, dbl spaces. 
+            # remove them for easier directory access
             # replace spaces with underscores for file and directory snake case
-            plant_name = ''
-            for char in new[0]:
-                if char != '[' and char != ']': 
-                    if char == ' ':
-                        char = '_'
-                    plant_name = plant_name + char
+            replace_spaces = new[0].replace(']', '')
+            replace_spaces = replace_spaces.replace('[', '')
+            replace_spaces = replace_spaces.replace('.', '')
+            replace_spaces = replace_spaces.replace('  ', ' ')
+            plant_name = replace_spaces.replace(' ', '-')
 
             # change to directory
-            species_dir = plant_name + f"_pg_{page_number}" 
+            species_dir = plant_name + f"-pg-{page_number}" 
             os.mkdir(species_dir)
             os.chdir(species_dir)
 
             # save file with species name. first item in page list
-            species_file = f'{plant_name}_pg_{page_number}.txt'
+            species_file = f'{plant_name}-pg-{page_number}.txt'
             out_file = open(species_file, 'w')
             out_file.write(str(new))
             out_file.close()

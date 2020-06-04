@@ -32,7 +32,12 @@ images = os.listdir(image_dir)
 # since multiple images can belong to the same directory
 for image in images:
     # ex 'NativePlants2020_Page_204_Image_0002.jpg'
+    # ['NativePlants2020', 'Page', '204', 'Image', '0002.jpg']
     pg_num = image.split('_')
+    try:
+        picture_number, file_type = pg_num[-1].split('.')
+    except:
+        pass
     
     # don't include dot files
     if len(pg_num) > 2:
@@ -41,11 +46,17 @@ for image in images:
     # nested for loop's not great. Is there a better way to do this?
     for directory in directories:
         # ex 'Calochortus_venustus_pg_457'
-        pg_num_dir = directory.split('_')
-        pg_num_dir = int(pg_num_dir[-1])
+        directory_name_split = directory.split('-')
+        # ['Corylus', 'cornuta', 'subsp', 'californica', 'pg', '83']
+
+        # page numbers don't match exactly
+        pg_num_of_directory = int(directory_name_split[-1]) + 2
         copy_dir = os.path.join(working_dir, directory)
         
-        if (pg_num == pg_num_dir) and os.path.isdir(copy_dir) and os.path.isfile(image):
-            new_image_name = os.path.join(copy_dir, image)
-            copyfile(image, new_image_name)
+        if (pg_num == pg_num_of_directory) and os.path.isdir(copy_dir) and os.path.isfile(image):
+            # Heterotheca-sessiliflora-subsp-echioides-2.jpg
+            new_image_name = ('-').join(directory_name_split[0:-2]) + "-" + picture_number[-1] + "." + file_type
+            # print(new_image_name)
+            new_image_name_path = os.path.join(copy_dir, new_image_name)
+            copyfile(image, new_image_name_path)
 
